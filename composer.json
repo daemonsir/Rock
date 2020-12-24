@@ -1,7 +1,7 @@
 {
-  "name": "rock/framework",
+  "name": "ayersrock/framework",
   "type": "library",
-  "description": "Rock is a PHP library",
+  "description": "Ayers Rock is a PHP library",
   "keywords": [
     "framework",
     "web service"
