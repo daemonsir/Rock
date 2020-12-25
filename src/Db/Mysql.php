@@ -1,7 +1,7 @@
 <?php
 
 namespace Rock\Db;
-class DBMysql
+class Mysql
 {
     private $_dbhost; //主机名
     private $_dbuser;//用户名
@@ -17,7 +17,7 @@ class DBMysql
      * @param string $dbuser
      * @param string $dbpwd
      * @param string $dbname
-     * @return DBMysql
+     * @return Mysql
      */
     function DBMysql ($dbhost ,$dbuser ,$dbpwd ,$dbname ,$charset = "utf8")
     {
