@@ -6,6 +6,7 @@
     "framework",
     "web service"
   ],
+  "license": "MIT",
   "authors": [
     {
       "name": "hs96.cn@gmail.com"
@@ -14,9 +15,10 @@
   "require": {
     "php": ">=7.0"
   },
+  "minimum-stability": "dev",
   "extra": {
     "branch-alias": {
-      "dev-main": "1.0.0-dev"
+      "dev-master": "1.0.0-dev"
     }
   },
   "autoload": {
