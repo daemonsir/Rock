@@ -27,21 +27,19 @@ class  Router
         self::$_module  = $module;
         self::$_action  = $action;
         self::$_method  = $method;
-        $actionFileName = _SITE_ROOT_ . '/' . $module . '/Action/' . $action . '.php';
-        if (true === file_exists($actionFileName)) {
-            $className = "$this->_baseNamespeac\\$module\\Action\\$action";
-            if (!class_exists($className))
-                $this->error('404 Not Found');
-            $controllerObject = new $className;
-            $reflectionClass  = new \ReflectionClass($controllerObject);
-            foreach ($reflectionClass->getMethods() as $reflectionMethod) {
-                preg_match("/@Route\[\"(.+)\"\]/" ,$reflectionMethod->getDocComment() ,$ret);
-                $route = isset($ret[1]) ? $ret[1] : '';
-                if ($route == trim(strtolower("/$module/$action/$method"))) {
-                    $functioName = $reflectionMethod->name;
-                    $controllerObject->$functioName();
-                    exit;
-                }
+        $className = "$this->_baseNamespeac\\$module\\Action\\$action";
+        echo $className;
+        if (!class_exists($className))
+            $this->error('404 Not Found');
+        $controllerObject = new $className;
+        $reflectionClass  = new \ReflectionClass($controllerObject);
+        foreach ($reflectionClass->getMethods() as $reflectionMethod) {
+            preg_match("/@Route\[\"(.+)\"\]/" ,$reflectionMethod->getDocComment() ,$ret);
+            $route = isset($ret[1]) ? $ret[1] : '';
+            if ($route == trim(strtolower("/$module/$action/$method"))) {
+                $functioName = $reflectionMethod->name;
+                $controllerObject->$functioName();
+                exit;
             }
         }
         $this->error('404 Not Found');
