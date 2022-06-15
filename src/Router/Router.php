@@ -10,12 +10,19 @@ class  Router
     private static $_action;
     private static $_method;
 
-    public function __construct ($baseNamespeac = "Project")
+    /**
+     * Router constructor.
+     * @param string $baseNamespeac
+     */
+    public function __construct($baseNamespeac = "App")
     {
         $this->_baseNamespeac = $baseNamespeac;
     }
 
-    function dispatch ()
+    /**
+     * @throws \ReflectionException
+     */
+    public function dispatch()
     {
         $module = ucfirst(strtolower(isset($_GET['_p']) ? $_GET['_p'] : 'back'));
         $action = ucfirst(strtolower(isset($_GET['_a']) ? $_GET['_a'] : 'index'));
@@ -24,19 +31,16 @@ class  Router
         if ('users' === $action || 'action' === $action) {
             $this->error('Forbidden');
         }
-        self::$_module  = $module;
-        self::$_action  = $action;
-        self::$_method  = $method;
+        self::$_module = $module;
+        self::$_action = $action;
+        self::$_method = $method;
         $className = "$this->_baseNamespeac\\$module\\Action\\$action";
-        echo $className;
-        if (!class_exists($className))
-            $this->error('404 Not Found');
         $controllerObject = new $className;
-        $reflectionClass  = new \ReflectionClass($controllerObject);
+        $reflectionClass = new \ReflectionClass($controllerObject);
         foreach ($reflectionClass->getMethods() as $reflectionMethod) {
-            preg_match("/@Route\[\"(.+)\"\]/" ,$reflectionMethod->getDocComment() ,$ret);
+            preg_match("/@Route\[\"(.+)\"\]/", $reflectionMethod->getDocComment(), $ret);
             $route = isset($ret[1]) ? $ret[1] : '';
-            if ($route == trim(strtolower("/$module/$action/$method"))) {
+            if ($route == trim(strtolower("$method"))) {
                 $functioName = $reflectionMethod->name;
                 $controllerObject->$functioName();
                 exit;
@@ -45,7 +49,7 @@ class  Router
         $this->error('404 Not Found');
     }
 
-    function error ($msg)
+    public function error($msg)
     {
         header('HTTP/1.1 404 Not Found');
         header('Status:404 Not Found');// 确保FastCGI模式下正常
