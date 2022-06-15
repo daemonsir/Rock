@@ -9,18 +9,26 @@
   "license": "MIT",
   "authors": [
     {
-      "name": "hs96.cn@gmail.com"
+      "name": "daemonsir",
+      "email": "hs96.cn@gmail.com",
+      "role": "Developer"
     }
   ],
   "require": {
-    "php": ">=7.0"
+    "php": ">=7.0",
+    "smarty/smarty": "v3.1.11"
   },
   "autoload": {
     "psr-4": {
       "Rock\\": "src/"
-    },
-    "files": [
-      "src/Includes/init.php"
-    ]
-  }
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Rock\\Tests\\": "tests/"
+    }
+  },
+  "include-path": [
+    "config/"
+  ]
 }
